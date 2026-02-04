@@ -9,6 +9,7 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("Viewer"); // ✅ default role
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -35,7 +36,12 @@ export default function Signup() {
 
     try {
       setLoading(true);
-      await api.post("/auth/register", { name, email, password });
+      await api.post("/auth/register", {
+        name,
+        email,
+        password,
+        role, // ✅ send role
+      });
       setTimeout(() => navigate("/"), 1200);
     } catch {
       setLoading(false);
@@ -80,6 +86,21 @@ export default function Signup() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          {/* Role Selection */}
+          <div>
+            <label className="text-xs text-gray-600 mb-1 block">
+              Select Role
+            </label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full bg-gray-100 rounded-md px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-black/20"
+            >
+              <option value="Viewer">Viewer (Read Only)</option>
+              <option value="Analyst">Analyst (Upload & View)</option>
+            </select>
+          </div>
 
           {/* Error */}
           {error && <p className="text-xs text-red-600 text-left">{error}</p>}
