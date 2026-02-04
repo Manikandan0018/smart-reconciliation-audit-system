@@ -39,7 +39,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <>
-      <AuthLoader/>
+        <AuthLoader />
       </>
     );
   }
@@ -70,9 +70,14 @@ export default function Dashboard() {
             </p>
 
             <div className="mt-6 scale-150 ">
-              <Link to="/upload">
-                <Uploadbtn />
-              </Link>
+              {user.role !== "Viewer" && (
+                <Link
+                  to="/upload"
+                  className="flex items-center gap-2 text-sm font-medium text-white bg-indigo-600 px-4 py-2 rounded-md"
+                >
+                  Upload Data
+                </Link>
+              )}
             </div>
           </div>
         </section>

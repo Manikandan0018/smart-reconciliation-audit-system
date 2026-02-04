@@ -6,28 +6,28 @@ import { authMiddleware } from "../middleware/auth.middleware.js";
 const router = express.Router();
 
 router.get("/", authMiddleware, async (req, res) => {
-  // 1️⃣ Get upload jobs created by this user
-  const jobs = await UploadJob.find({ uploadedBy: req.user.id }, { _id: 1 });
+  let filter = {};
 
-  const jobIds = jobs.map((job) => job._id);
+  if (req.user.role !== "Admin") {
+    // Analyst / Viewer → only own data
+    const jobs = await UploadJob.find({ uploadedBy: req.user.id }, { _id: 1 });
+    const jobIds = jobs.map((j) => j._id);
 
-  // 2️⃣ Count records ONLY for this user's jobs
-  const total = await Record.countDocuments({
-    uploadJobId: { $in: jobIds },
-  });
+    filter.uploadJobId = { $in: jobIds };
+  }
+  // Admin → no filter → sees all data
 
+  const total = await Record.countDocuments(filter);
   const matched = await Record.countDocuments({
-    uploadJobId: { $in: jobIds },
+    ...filter,
     status: "Matched",
   });
-
   const unmatched = await Record.countDocuments({
-    uploadJobId: { $in: jobIds },
+    ...filter,
     status: "Unmatched",
   });
-
   const duplicate = await Record.countDocuments({
-    uploadJobId: { $in: jobIds },
+    ...filter,
     status: "Duplicate",
   });
 
