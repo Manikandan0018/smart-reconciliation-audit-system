@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+.auth-gradient {
+  background: linear-gradient(
+    135deg,
+    #f472f7 0%,
+    #c084fc 45%,
+    #fbd1b7 100%
+  );
+}
+
+.barrio-regular {
+  font-family: "Barrio", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
