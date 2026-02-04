@@ -136,12 +136,4 @@ Upload Job ID
 
 Authentication & Authorization
 
-The system supports three roles:
 
-Admin – full access
-
-Analyst – upload files and perform reconciliation
-
-Viewer – read-only access
-
-Role enforcement is applied on both frontend and backend.
