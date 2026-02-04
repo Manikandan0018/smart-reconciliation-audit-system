@@ -1,110 +1,132 @@
-📊 Smart Reconciliation & Audit System
+Smart Reconciliation & Audit System
 
-Live Demo: https://smart-reconciliation-audit-system-kappa.vercel.app/
+Live Application:
+👉 https://smart-reconciliation-audit-system-kappa.vercel.app/
 
-A full-stack MERN (MongoDB, Express, React, Node.js) application designed for efficient reconciliation of large transaction datasets, identification of duplicates and mismatches, and providing a complete, immutable audit trail. Built with performance, scalability, data integrity, and enterprise-grade UX in mind.
+This project is a full-stack MERN application built as part of a technical assignment to demonstrate real-world system design, async processing, data reconciliation, and auditability.
 
-🚀 Features
-🧾 Frontend (React)
+The goal of the system is to ingest large transaction files, reconcile them against existing system data, identify mismatches or duplicates, and maintain a clear, immutable audit trail of all actions performed on the data.
 
-✔ Reconciliation Dashboard
+Why This Project
 
-Summary cards:
-• Total records
-• Matched
-• Unmatched
-• Duplicate
-• Accuracy %
+In many real systems (finance, operations, compliance), data reconciliation is not just about CRUD operations.
+It requires:
 
-Responsive charts and filters
+Handling large datasets efficiently
 
-Dynamic updates as filters change
+Clear matching rules
 
-✔ File Upload Interface
+Repeatable and idempotent processing
 
-CSV / Excel (.xls, .xlsx) file support
+Full audit history
 
-Drag-and-drop or click to upload
+Role-based access control
 
-Preview filename and size
+This project focuses on those concerns, rather than just UI or basic APIs.
 
-Professional UI, step-workflow layout
+What the System Does
+1. Reconciliation Dashboard
 
-✔ Column Mapping
+The dashboard provides a high-level overview of the reconciliation state:
 
-Preview first 20 rows
+Total records uploaded
 
-Manual map uploaded columns to system fields
+Matched records
 
-Mandatory fields enforced
-(✔ Awaiting integration)
+Unmatched records
 
-✔ Reconciliation View
+Duplicate records
 
-Compare uploaded vs system data
+Overall reconciliation accuracy
 
-Show match status:
-• Matched
-• Partial match
-• Unmatched
-• Duplicate
+The data updates dynamically based on filters such as date range and upload source.
 
-Highlight mismatched fields
-(✔ Can be added next)
+2. File Upload & Ingestion
 
-✔ Audit Timeline
+Users can upload CSV or Excel files containing transaction data.
 
-Visual timeline per record
+Key points:
 
-Tracks who changed what and when
-(✔ Planned)
+Supports drag & drop and manual file selection
 
-✔ Role-Based Access
+Handles large files (up to tens of thousands of records)
 
-Admin, Analyst, Viewer
+Upload processing is asynchronous and non-blocking
 
-Enforced on frontend & backend
+Duplicate uploads are detected and handled safely
 
-⚙️ Backend (Node.js + Express)
+3. Reconciliation Logic
 
-✔ Upload processing for large files
+Each uploaded record is reconciled against system records using configurable rules:
 
-Async, non-blocking
+Exact Match
+Transaction ID + Amount match exactly
 
-Handles up to 50,000 records
-✔ Reconciliation logic
+Partial Match
+Reference number matches with amount variance within ±2%
 
-Exact match: Transaction ID + Amount
+Duplicate
+Same transaction ID appears more than once
 
-Partial match: Reference match + ±2% variance
+Unmatched
+No matching system record found
 
-Duplicate detection
+These rules are not hardcoded, allowing flexibility for future changes.
 
-Configurable match rules
-✔ Idempotency
+4. Audit Trail
 
-Same file re-upload does not create duplicates
-✔ Audit Trail
+Every important action in the system is logged:
 
-Immutable logs
+Who made the change
 
-Tracks old vs new values, user, timestamp
-✔ REST APIs
+What changed (old value → new value)
 
-Documented via Postman / Swagger
+When the change occurred
 
-🗄 Database (MongoDB)
+Source of the change
 
-Collections:
+Audit logs are stored in a separate collection and are immutable, ensuring traceability and compliance.
 
-Collection	Purpose
-Users	Auth + Role data
-UploadJobs	File ingestion metadata
-Records	Stored transaction records
-ReconciliationResults	Match status + results
-AuditLogs	Immutable audit history
+Tech Stack
+Frontend
 
-Indexes:
+React
+
+Tailwind CSS
+
+Axios
+
+Lucide Icons
+
+Deployed on Vercel
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+JWT Authentication
+
+Async processing for uploads
+
+Database Design (MongoDB)
+
+Main collections used:
+
+Users – authentication and roles
+
+UploadJobs – metadata and status of file uploads
+
+Records – normalized transaction data
+
+ReconciliationResults – match status and comparison data
+
+AuditLogs – immutable audit history
+
+Indexes are applied on:
 
 Transaction ID
 
@@ -112,30 +134,14 @@ Reference Number
 
 Upload Job ID
 
-🛠 Non Functional Requirements
+Authentication & Authorization
 
-✔ Scales to large data sets
-✔ UI responsive during uploads
-✔ Partial failures handled gracefully
-✔ Clear error messages
+The system supports three roles:
 
-🧩 Architecture Diagram
-React UI  --->  Node/Express Backend  --->  MongoDB
-      |              |                               |
-      |     Async upload processing     Audit Log storage
-      |              |
-      v       Reconciliation Engine
+Admin – full access
 
-📦 Folder Structure
-smart-reconciliation-audit-system/
-├── backend/                # API + business logic
-├── frontend/               # React UI
-├── docs/                  # API & architecture docs
-├── .gitignore
-├── README.md
+Analyst – upload files and perform reconciliation
 
-🪄 Live Deployment
+Viewer – read-only access
 
-Frontend is deployed on Vercel:
-
-👉 https://smart-reconciliation-audit-system-kappa.vercel.app/
+Role enforcement is applied on both frontend and backend.
