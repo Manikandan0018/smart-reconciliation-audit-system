@@ -5,6 +5,7 @@ import { Layers } from "lucide-react";
 
 import Uploadbtn from "../components/Uploadbtn";
 import ReconciliationCard from "../components/ReconciliationCard";
+import AuthLoader from "../components/AuthLoader";
 
 /* ---------- Stat Card ---------- */
 const StatCard = ({ title, value, icon, accent }) => (
@@ -37,11 +38,9 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-sm text-slate-500">
-          Preparing reconciliation overview…
-        </p>
-      </div>
+      <>
+      <AuthLoader/>
+      </>
     );
   }
 
