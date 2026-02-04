@@ -93,7 +93,6 @@ export default function Signup() {
         {/* Login link */}
         <p className="text-xs mt-4 text-gray-700 text-center">
           Already have an account?{" "}
-          
           <button
             onClick={() => navigate("/")}
             className="font-medium cursor-pointer hover:underline"
