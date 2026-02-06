@@ -7,7 +7,7 @@ import ReconciliationCard from "../components/ReconciliationCard";
 import AuthLoader from "../components/AuthLoader";
 import { useAuth } from "../context/AuthContext";
 
-/* ---------- Info Banner ---------- */
+/*  Info Banner  */
 const ViewerNotice = () => (
   <div className="mt-6 flex items-center gap-3 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl text-sm font-medium">
     <Lock size={18} />
@@ -46,7 +46,7 @@ export default function Dashboard() {
       </div>
 
       <div className="min-h-screen bg-[#f9fafb] pt-16">
-        {/* ---------- HERO ---------- */}
+        {/*  HERO  */}
         <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 hero-gradient blur-[60px] scale-110" />
           <div className="absolute inset-0 bg-white/10 backdrop-blur-md" />
@@ -61,7 +61,7 @@ export default function Dashboard() {
               and track accuracy in real time.
             </p>
 
-            {/* ---------- ROLE-AWARE CTA ---------- */}
+            {/* ROLE-AWARE CTA  */}
             <div className="mt-6 scale-110">
               {user.role === "Viewer" ? (
                 <ViewerNotice />
